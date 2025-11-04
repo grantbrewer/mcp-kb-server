@@ -365,7 +365,7 @@ end
 get '/articles' do
   begin
     @title = 'All Articles - Knowledge Base'
-    @articles = Article.order(Sequel.desc(:created_at)).all
+    @articles = Article.not_deleted.order(Sequel.desc(:created_at)).all
     haml :articles
   rescue Sequel::DatabaseError => e
     @title = 'Error - Knowledge Base'
@@ -405,8 +405,8 @@ get '/articles/:id' do
   end
 end
 
-# Edit article form (HTML)
-get '/articles/:id/edit' do
+# Update article form (HTML)
+get '/articles/:id/update' do
   begin
     article_id = params[:id].to_i
     if article_id <= 0
@@ -422,7 +422,7 @@ get '/articles/:id/edit' do
       return haml :error
     end
 
-    @title = "Edit #{@article.title} - Knowledge Base"
+    @title = "Update #{@article.title} - Knowledge Base"
     haml :edit
   rescue Sequel::DatabaseError => e
     @title = 'Error - Knowledge Base'
@@ -437,7 +437,7 @@ get '/articles/:id/edit' do
 end
 
 # Update article (HTML form handler)
-post '/articles/:id' do
+post '/articles/:id/update' do
   begin
     article_id = params[:id].to_i
     if article_id <= 0
@@ -536,8 +536,8 @@ get '/' do
         new_article: 'GET /new',
         all_articles: 'GET /articles',
         view_article: 'GET /articles/:id',
-        edit_article: 'GET /articles/:id/edit',
-        update_article: 'POST /articles/:id',
+        update_article_form: 'GET /articles/:id/update',
+        update_article: 'POST /articles/:id/update',
         delete_article: 'POST /articles/:id/delete'
       },
       mcp: 'POST /mcp',

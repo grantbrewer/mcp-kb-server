@@ -1,7 +1,6 @@
-%h1 Edit Article
+%h1 Update Article
 
-%form{method: "POST", action: "/articles/#{@article.id}"}
-  %input{type: "hidden", name: "_method", value: "PUT"}
+%form{method: "POST", action: "/articles/#{@article.id}/update"}
 
   %label{for: "title"} Title *
   %input{type: "text", id: "title", name: "title", value: @article.title, required: true}
