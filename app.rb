@@ -6,95 +6,16 @@ require 'haml'
 require_relative 'lib/models'
 require_relative 'lib/mcp_handler'
 require_relative 'lib/errors'
+require_relative 'lib/error_handlers'
+require_relative 'lib/helpers'
 
 set :port, 4567
 set :bind, '0.0.0.0'
 set :show_exceptions, false
 
-# Helper method to generate slug from title
-def generate_slug(title)
-  title.downcase.strip.gsub(/[^\w\s-]/, '').gsub(/\s+/, '-')
-end
-
-# Helper method to sanitize input (basic XSS prevention)
-def sanitize_input(input)
-  return nil if input.nil?
-  # Remove any HTML tags and trim whitespace
-  input.to_s.gsub(/<[^>]*>/, '').strip
-end
-
-# Error handlers
-error ValidationError do
-  err = env['sinatra.error']
-  status err.status_code
-  content_type :json
-  json({
-    error: err.error_code,
-    message: err.message,
-    validation_errors: err.validation_errors
-  })
-end
-
-error ArticleNotFoundError do
-  err = env['sinatra.error']
-  status err.status_code
-  content_type :json
-  json({
-    error: err.error_code,
-    message: err.message
-  })
-end
-
-error InvalidRequestError do
-  err = env['sinatra.error']
-  status err.status_code
-  content_type :json
-  json({
-    error: err.error_code,
-    message: err.message
-  })
-end
-
-error DatabaseError do
-  err = env['sinatra.error']
-  status err.status_code
-  content_type :json
-  json({
-    error: err.error_code,
-    message: err.message
-  })
-end
-
-error KnowledgeBaseError do
-  err = env['sinatra.error']
-  status err.status_code
-  content_type :json
-  json({
-    error: err.error_code,
-    message: err.message
-  })
-end
-
-# Generic error handler for unexpected errors
-error StandardError do
-  err = env['sinatra.error']
-  status 500
-  content_type :json
-  json({
-    error: 'internal_error',
-    message: 'An unexpected error occurred',
-    details: err.message
-  })
-end
-
-# 404 handler
-not_found do
-  content_type :json
-  json({
-    error: 'not_found',
-    message: 'The requested resource was not found'
-  })
-end
+# Register error handlers and helpers
+register ErrorHandlers
+helpers Helpers
 
 # MCP Protocol endpoint
 post '/mcp' do
