@@ -1,5 +1,5 @@
 require 'json'
-require_relative 'models'
+require_relative '../models/article'
 require_relative 'errors'
 
 class MCPHandler

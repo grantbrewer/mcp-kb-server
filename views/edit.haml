@@ -1,0 +1,34 @@
+%h1 Edit Article
+
+%form{method: "POST", action: "/articles/#{@article.id}"}
+  %input{type: "hidden", name: "_method", value: "PUT"}
+
+  %label{for: "title"} Title *
+  %input{type: "text", id: "title", name: "title", value: @article.title, required: true}
+  %p.hint Current slug: #{@article.slug}
+
+  %label{for: "content"} Content *
+  %textarea{id: "content", name: "content", required: true}= @article.content
+
+  %label{for: "author"} Author
+  %input{type: "text", id: "author", name: "author", value: @article.author}
+
+  %label{for: "category"} Category
+  %input{type: "text", id: "category", name: "category", value: @article.category}
+
+  %label{for: "tags"} Tags
+  %input{type: "text", id: "tags", name: "tags", value: @article.tags, placeholder: "comma, separated, tags"}
+
+  %label{for: "is_published"} Status
+  %select{id: "is_published", name: "is_published"}
+    %option{value: "true", selected: @article.is_published} Published
+    %option{value: "false", selected: !@article.is_published} Draft
+
+  %button{type: "submit"} Update Article
+
+%p
+  %a{href: "/articles/#{@article.id}"} Cancel
+  |
+  %a{href: "/articles"} View all articles
+  |
+  %a{href: "/"} API Info

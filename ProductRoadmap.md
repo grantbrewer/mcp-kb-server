@@ -90,43 +90,42 @@
 
 #### Database Improvements
 - Connection pooling configuration
-- Database URL support (for Heroku, etc.)
 - Migration version tracking
 - Add indexes (title, slug, published_at, is_published)
 - Add foreign key constraints if needed
 
-### 4. Enhanced Models & Business Logic
+### 4. Enhanced Models & Business Logic ✅ COMPLETED
 **Goal:** Move logic out of controllers
 
-#### Model Enhancements
-- Add Article scopes (published, drafts, recent, by_category)
-- Add full-text search with SQLite FTS5
-- Add pagination support
-- Add article versioning/audit trail
-- Add soft deletes (deleted_at column)
+#### Model Enhancements ✅
+- ✅ Add Article scopes (published, drafts, recent, by_category)
+- ✅ Add full-text search with SQLite FTS5
+- ✅ Add pagination support
+- Add article versioning/audit trail (deferred to Level 3)
+- ✅ Add soft deletes (deleted_at column)
 
-#### Service Objects
-- ArticleCreator service (handles slug generation, timestamps)
-- ArticlePublisher service (publishing workflow)
-- SearchService (complex search logic)
-- MCPRequestHandler (separate from controller logic)
+#### Service Objects ✅
+- ✅ ArticleCreator service (handles slug generation, timestamps)
+- ✅ ArticlePublisher service (publishing workflow)
+- ✅ SearchService (complex search logic)
+- ✅ MCPRequestHandler (separate from controller logic)
 
-### 5. API Enhancements
+### 5. API Enhancements ✅ COMPLETED
 **Goal:** Better developer experience
 
-#### API Versioning
-- Add /api/v1/ prefix
-- Version MCP protocol responses
+#### API Versioning ✅
+- ✅ Add /api/v1/ prefix
+- ✅ Version MCP protocol responses
 
-#### Response Formatting
-- Consistent JSON structure (data, meta, errors)
-- Add pagination metadata (total, per_page, current_page)
-- HTTP status codes following REST conventions
+#### Response Formatting ✅
+- ✅ Consistent JSON structure (data, meta, errors)
+- ✅ Add pagination metadata (total, per_page, current_page)
+- ✅ HTTP status codes following REST conventions
 
-#### Documentation
-- API documentation (Swagger/OpenAPI spec)
-- MCP protocol documentation with examples
-- Add /api/docs endpoint (Swagger UI)
+#### Documentation ✅
+- ✅ API documentation (Markdown format - docs/api.md)
+- ✅ MCP protocol documentation with examples (docs/mcp-protocol.md)
+- Swagger/OpenAPI UI (skipped - using markdown docs instead)
 
 ### 6. Web Interface Improvements
 **Goal:** Better user experience
@@ -177,49 +176,44 @@
 - Database backup/restore scripts
 - Sample data generators (faker gem)
 
-### Project Structure After Level 2
+### Project Structure After Level 2 ✅ IMPLEMENTED
 ```
-mcp-kb-server/
-├── app/
-│   ├── models/
-│   │   └── article.rb
-│   ├── services/
-│   │   ├── article_creator.rb
-│   │   ├── article_publisher.rb
-│   │   └── search_service.rb
-│   ├── controllers/
-│   │   ├── web_controller.rb
-│   │   ├── api_controller.rb
-│   │   └── mcp_controller.rb
-│   └── helpers/
-│       └── application_helper.rb
+mcp-kb-server V2/           # ✅ Flat Sinatra structure (not Rails-like)
+├── models/                  # ✅ Domain models
+│   └── article.rb          # ✅
+├── services/               # ✅ Business logic services
+│   ├── article_creator.rb  # ✅
+│   ├── article_publisher.rb # ✅
+│   ├── search_service.rb   # ✅
+│   └── mcp_request_handler.rb # ✅
+├── views/                  # ✅ HAML templates
+│   ├── layout.haml
+│   ├── new.haml
+│   ├── articles.haml
+│   ├── show.haml
+│   └── error.haml
+├── docs/                   # ✅ API documentation
+│   ├── api.md             # ✅
+│   └── mcp-protocol.md    # ✅
+├── lib/                    # ✅ Framework extensions
+│   ├── mcp_handler.rb     # ✅ (legacy, now using MCPRequestHandler)
+│   ├── errors.rb          # ✅
+│   ├── error_handlers.rb  # ✅
+│   └── helpers.rb         # ✅
+├── db/                     # ✅
+│   └── migrations/        # ✅
+│       ├── 001_create_articles.rb      # ✅
+│       ├── 002_add_deleted_at_to_articles.rb # ✅
+│       ├── 003_add_fts5_search.rb      # ✅
+│       └── 004_add_performance_indexes.rb # ✅
 ├── config/
-│   ├── database.rb
-│   ├── environments/
-│   │   ├── development.rb
-│   │   ├── test.rb
-│   │   └── production.rb
-│   └── initializers/
-├── spec/ or test/
-│   ├── models/
-│   ├── services/
-│   ├── integration/
-│   └── spec_helper.rb
-├── lib/
-│   ├── mcp_handler.rb
-│   └── errors.rb
-├── db/
-│   ├── migrations/
-│   ├── seeds.rb
-│   └── schema.rb
-├── views/
-├── public/
-│   ├── css/
-│   └── js/
-├── .env.example
-├── .rubocop.yml
-├── .github/workflows/
-└── README.md (expanded)
+│   └── database.rb
+├── app.rb                 # ✅ Main application file
+├── Gemfile
+└── README.md
+
+Note: Used flat Sinatra structure (models/, services/, views/ in root)
+instead of nested app/ directory for simplicity.
 ```
 
 ---
