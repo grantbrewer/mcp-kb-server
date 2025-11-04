@@ -1,0 +1,30 @@
+%h1 Create New Article
+
+%form{method: "POST", action: "/articles"}
+  %label{for: "title"} Title *
+  %input{type: "text", id: "title", name: "title", required: true}
+  %p.hint The slug will be automatically generated from the title
+
+  %label{for: "content"} Content *
+  %textarea{id: "content", name: "content", required: true}
+
+  %label{for: "author"} Author
+  %input{type: "text", id: "author", name: "author"}
+
+  %label{for: "category"} Category
+  %input{type: "text", id: "category", name: "category"}
+
+  %label{for: "tags"} Tags
+  %input{type: "text", id: "tags", name: "tags", placeholder: "comma, separated, tags"}
+
+  %label{for: "is_published"} Status
+  %select{id: "is_published", name: "is_published"}
+    %option{value: "true"} Published
+    %option{value: "false"} Draft
+
+  %button{type: "submit"} Create Article
+
+%p
+  %a{href: "/articles"} View all articles
+  |
+  %a{href: "/"} API Info

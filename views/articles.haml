@@ -1,0 +1,28 @@
+%h1 Knowledge Base Articles
+
+%a.btn{href: "/new"} + New Article
+
+%table
+  %tr
+    %th ID
+    %th Title
+    %th Author
+    %th Category
+    %th Status
+    %th Created
+  - @articles.each do |article|
+    %tr
+      %td= article.id
+      %td
+        %a{href: "/articles/#{article.id}"}= article.title
+      %td= article.author
+      %td= article.category
+      %td
+        - if article.is_published
+          %span.status-published ✓ Published
+        - else
+          %span.status-draft Draft
+      %td= article.created_at.strftime('%Y-%m-%d %H:%M') rescue 'N/A'
+
+%p
+  %a{href: "/"} Back to API Info

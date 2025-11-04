@@ -1,0 +1,39 @@
+%h1= @article.title
+
+.meta
+  .meta-item
+    %span.meta-label Status:
+    - if @article.is_published
+      %span.status-published ✓ Published
+    - else
+      %span.status-draft Draft
+  .meta-item
+    %span.meta-label Slug:
+    = @article.slug
+  .meta-item
+    %span.meta-label Author:
+    = @article.author || 'N/A'
+  .meta-item
+    %span.meta-label Category:
+    = @article.category || 'N/A'
+  .meta-item
+    %span.meta-label Tags:
+    - if @article.tag_list.empty?
+      N/A
+    - else
+      - @article.tag_list.each do |tag|
+        %span.tag= tag
+  .meta-item
+    %span.meta-label Created:
+    = @article.created_at.strftime('%Y-%m-%d %H:%M') rescue 'N/A'
+  .meta-item
+    %span.meta-label Published:
+    = @article.published_at ? @article.published_at.strftime('%Y-%m-%d %H:%M') : 'Not published'
+
+.content
+  %p!= @article.content.gsub("\n", '<br>')
+
+%p
+  %a{href: "/articles"} ← Back to all articles
+  |
+  %a{href: "/new"} Create new article

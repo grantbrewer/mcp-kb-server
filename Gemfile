@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+gem 'sinatra', '~> 4.0'
+gem 'sinatra-contrib', '~> 4.0'
+gem 'sequel', '~> 5.84'
+gem 'sqlite3', '~> 2.4'
+gem 'puma', '~> 6.4'
+gem 'rake', '~> 13.2'
+gem 'rackup', '~> 2.2'
+gem 'builder', '~> 3.3'
+gem 'haml', '~> 6.3'
